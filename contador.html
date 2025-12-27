@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Contadores especiales</title>
+
+    <!-- Fuentes -->
+    <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Playfair+Display:wght@400;600&family=Mountains+of+Christmas&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #111;
+            color: white;
+        }
+
+        section {
+            min-height: 100vh;
+            padding: 60px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        /* -------- SECCIÓN ROMÁNTICA 1 -------- */
+        .romantica {
+            background: linear-gradient(135deg, #2b0a1f, #4b1c3a);
+        }
+
+        .romantica h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3em;
+            margin-bottom: 25px;
+        }
+
+        .romantica .contador {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6em;
+        }
+
+        /* -------- SECCIÓN ROMÁNTICA 2 -------- */
+        .romantica2 {
+            background: linear-gradient(135deg, #1a1a2e, #16213e);
+        }
+
+        .romantica2 h1 {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8em;
+            margin-bottom: 25px;
+        }
+
+        .romantica2 .contador {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.6em;
+        }
+
+        /* -------- SECCIÓN NAVIDAD -------- */
+        .navidad {
+            background: linear-gradient(135deg, #0b3d2e, #14532d);
+        }
+
+        .navidad h1 {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 3em;
+            margin-bottom: 25px;
+            color: #ffeb3b;
+        }
+
+        .navidad .contador {
+            font-family: 'Mountains of Christmas', cursive;
+            font-size: 1.8em;
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SECCIÓN 1 -->
+    <section class="romantica">
+        <h1>Fíjate tú cuánto tiempo llevas queriéndome</h1>
+        <div id="contador1" class="contador"></div>
+    </section>
+
+    <!-- SECCIÓN 2 -->
+    <section class="romantica2">
+        <h1>Este es el tiempo que llevas escribiéndome buenas noches todos los días</h1>
+        <div id="contador2" class="contador"></div>
+    </section>
+
+    <!-- SECCIÓN 3 -->
+    <section class="navidad">
+        <h1>🎄 Tiempo que falta para Navidad 🎄</h1>
+        <div id="contador3" class="contador"></div>
+    </section>
+
+    <script>
+        const fecha1 = new Date(2025, 8, 30, 14, 35, 0); // 30 septiembre 2025
+        const fecha2 = new Date(2025, 7, 14, 19, 0, 0);  // 14 agosto 2025
+
+        function calcularTiempoDesde(fechaInicio, id) {
+            const ahora = new Date();
+            const diferencia = ahora - fechaInicio;
+
+            if (diferencia < 0) {
+                document.getElementById(id).textContent =
+                    "Aún no ha llegado ese momento";
+                return;
+            }
+
+            const total = Math.floor(diferencia / 1000);
+            const dias = Math.floor(total / 86400);
+            const horas = Math.floor((total % 86400) / 3600);
+            const minutos = Math.floor((total % 3600) / 60);
+            const segundos = total % 60;
+
+            document.getElementById(id).textContent =
+                `${dias} días, ${horas} horas, ${minutos} minutos y ${segundos} segundos`;
+        }
+
+        function calcularNavidad() {
+            const ahora = new Date();
+            let navidad = new Date(ahora.getFullYear(), 11, 25, 0, 0, 0);
+
+            if (ahora > navidad) {
+                navidad = new Date(ahora.getFullYear() + 1, 11, 25, 0, 0, 0);
+            }
+
+            const diferencia = navidad - ahora;
+            const total = Math.floor(diferencia / 1000);
+
+            const dias = Math.floor(total / 86400);
+            const horas = Math.floor((total % 86400) / 3600);
+            const minutos = Math.floor((total % 3600) / 60);
+            const segundos = total % 60;
+
+            document.getElementById("contador3").textContent =
+                `${dias} días, ${horas} horas, ${minutos} minutos y ${segundos} segundos`;
+        }
+
+        function actualizar() {
+            calcularTiempoDesde(fecha1, "contador1");
+            calcularTiempoDesde(fecha2, "contador2");
+            calcularNavidad();
+        }
+
+        setInterval(actualizar, 1000);
+        actualizar();
+    </script>
+
+</body>
+</html>
